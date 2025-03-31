@@ -90,7 +90,7 @@ data_1|>
 ```{r fig.height=5, fig.width=5.5, warning=FALSE}
   ggplot(data_1, 
          aes(x = phoneme, y = skewness, fill = phoneme)) + 
-  stat_summary(fun = mean) +
+  stat_summary(fun.data = mean_sdl) +
   labs(title = "skewness as a function of phoneme",
        x = "Phoneme", y = "Skewness")
 
