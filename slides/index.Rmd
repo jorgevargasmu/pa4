@@ -121,7 +121,6 @@ data_s |>
 knitr::kable(summary(model)$coef)
 ```
 
-
 ---
 ##Model diagnostics
 
@@ -130,7 +129,7 @@ diagnosis(model)
 ```
 ---
 #Report
-Center of gravity (COG) data of the phoneme [s] was analyzed as a function of skewness using a linear model. The model included COG [s] as the dependent variable and skewness as the independent variable. The results showed a positive correlation between the two variables. The COG increases along the level of skewness in the phoneme s, with significant pi values (p = 1.31e-13). The results suggests that level of skewness is dependent on the COG of the phoneme s. 
+Center of gravity (COG) data of the phoneme [s] was analyzed as a function of skewness using a linear model. The model included COG [s] as the dependent variable and skewness as the independent variable. The results showed a positive correlation between the two variables. The COG increases along the level of skewness in the phoneme s, [B = 995.87, SE = 111.14 , p = 1.31e-13]. The results suggests that COG increases 995.87 per unit point of skewness, and it is statistically significant. 
 
 
 ---
