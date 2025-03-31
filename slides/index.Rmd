@@ -1,0 +1,150 @@
+---
+title: "Programming assigment 4"
+subtitle: "Data science"
+author: "Jorge Vargas-Mutizabal"
+date: "2025/03/29 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+# Libraries
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ds4ling)
+```
+---
+#Data load
+```{r}
+data <- read.csv("../data_raw/fricatives/fricatives.csv")
+
+```
+---
+##Data tidying: COG and Skewness for S and Sh 
+```{r}
+
+
+data_1 <- data |>
+  pivot_longer(cols = c(s_cog, sh_cog),
+               names_to = "phoneme", 
+               values_to = "cog")|>
+pivot_longer(cols = c(s_skewness, sh_skewness),
+             names_to = "phoneme_skewness",
+             values_to = "skewness")|>
+  select("phoneme", "cog", "skewness")|>
+  mutate(phoneme = gsub("_cog", "", phoneme))
+  
+  
+  
+
+  
+```
+---
+# Data print
+```{r}
+print(data_1)
+```
+
+
+---
+#Table of descriptive statistics
+```{r}
+  summary(data_1)
+  
+```
+---
+#Tidy data
+```{r}
+write.csv(data_1, "../data_tidy/data_tidy.csv")
+```
+
+
+---
+#Boxplot of COG as a function of phoneme
+```{r fig.height=5, fig.width=5}
+data_1|>
+  ggplot() +
+  (aes(x = phoneme, y = cog, fill = phoneme)) +
+  geom_boxplot() +
+  labs(title = "Center of gravitiy",
+       x = "Phoneme", y = "Center of gravity")
+```
+
+---
+## Plot skewness as a function of phoneme
+```{r fig.height=5, fig.width=5.5, warning=FALSE}
+  ggplot(data_1, 
+         aes(x = phoneme, y = skewness, fill = phoneme)) + 
+  stat_summary(fun = mean) +
+  labs(title = "skewness as a function of phoneme",
+       x = "Phoneme", y = "Skewness")
+
+```
+---
+## COG as a function of skewness for the [s] segments 
+```{r fig.height=4, fig.width=7}
+data_s <- data_1 |>
+
+  filter(phoneme == "s")  
+
+model <- lm(
+  cog ~ skewness,
+  data = data_s)
+
+print(model)
+```
+---
+##Summary model
+```{r}
+summary(model)
+```
+
+---
+
+##Scatter plot of COG ~ skweness for [s]
+```{r fig.height=3.5, fig.width=5, message=TRUE}
+data_s |>
+  ggplot() +
+  aes(x = cog, y = skewness) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Gravity as a function of skwness",
+       x = "COG", y = "Skewness")
+```
+---
+
+##Model diagnostics
+
+```{r fig.height=6.5, fig.width=7}
+diagnosis(model)
+```
+---
+#Report
+Center of gravity (COG) data of the phoneme [s] was analyzed as a function of skewness using a linear model. The model included COG [s] as the dependent variable and skewness as the independent variable. The results showed a positive correlation between the two variables. The COG increases along the level of skewness in the phoneme s, with significant pi values (p = 1.31e-13). The results suggests that level of skewness is dependent on the COG of the phoneme s. 
+
+
+---
+# Assumptions data
+```{r}
+data_2 <- read_csv("../data_raw/fricatives/assumptions.csv")
+```
+---
+##Plotting data: Surprise!
+```{r fig.height=5, fig.width=5}
+data_2|>
+  
+  ggplot() +
+  geom_point() +
+  aes(x = x, y = y) +
+  labs (x = "x", y = "y", tile = "Assumptions")
+```
+---
+# Explanation
+The data does not have real data. It makes a cute dinasaur. 
+
+---
+# ¡Muchas gracias!
