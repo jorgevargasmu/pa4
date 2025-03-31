@@ -112,7 +112,7 @@ data_s |>
   aes(x = cog, y = skewness) +
   geom_point() +
   geom_smooth(method = "lm") +
-  labs(title = "Gravity as a function of skwness",
+  labs(title = "Gravity as a function of skewness",
        x = "COG", y = "Skewness")
 ```
 ---
