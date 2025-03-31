@@ -105,18 +105,24 @@ print(data_1)
 #Table of descriptive statistics
 
 ``` r
-  summary(data_1)
+summary_table &lt;- data_1 |&gt;
+  group_by(phoneme)|&gt;
+  summarise(
+    mean_skew = mean(skewness),
+    mean_cog = mean (cog),
+    mean_skew = median (skewness),
+    mead_cog = median (cog)
+  )
+
+knitr::kable(summary_table)
 ```
 
-```
-##    phoneme               cog          skewness    
-##  Length:200         Min.   :2556   Min.   :2.102  
-##  Class :character   1st Qu.:4017   1st Qu.:2.983  
-##  Mode  :character   Median :4876   Median :3.458  
-##                     Mean   :4847   Mean   :3.430  
-##                     3rd Qu.:5761   3rd Qu.:3.865  
-##                     Max.   :7095   Max.   :4.752
-```
+
+
+|phoneme | mean_skew| mean_cog| mead_cog|
+|:-------|---------:|--------:|--------:|
+|s       |  3.457987| 5600.448| 5629.104|
+|sh      |  3.457987| 4093.861| 4091.038|
 ---
 #Tidy data
 
@@ -176,34 +182,6 @@ print(model)
 ##      2322.4        955.8
 ```
 ---
-##Summary model
-
-``` r
-summary(model)
-```
-
-```
-## 
-## Call:
-## lm(formula = cog ~ skewness, data = data_s)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1768.24  -319.83     3.08   438.48  1045.61 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   2322.4      386.3   6.012 3.15e-08 ***
-## skewness       955.8      111.1   8.600 1.31e-13 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 627.6 on 98 degrees of freedom
-## Multiple R-squared:  0.4301,	Adjusted R-squared:  0.4243 
-## F-statistic: 73.96 on 1 and 98 DF,  p-value: 1.311e-13
-```
-
----
 
 ##Scatter plot of COG ~ skweness for [s]
 
@@ -221,9 +199,23 @@ data_s |&gt;
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ---
+##Table model: Coefficients
 
+``` r
+knitr::kable(summary(model)$coef)
+```
+
+
+
+|            |  Estimate| Std. Error|  t value| Pr(&gt;&amp;#124;t&amp;#124;)|
+|:-----------|---------:|----------:|--------:|------------------:|
+|(Intercept) | 2322.3856|   386.3135| 6.011660|                  0|
+|skewness    |  955.8394|   111.1472| 8.599758|                  0|
+
+
+---
 ##Model diagnostics
 
 

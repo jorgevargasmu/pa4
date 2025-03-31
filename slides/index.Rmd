@@ -53,7 +53,18 @@ print(data_1)
 ---
 #Table of descriptive statistics
 ```{r}
-  summary(data_1)
+
+summary_table <- data_1 |>
+  group_by(phoneme)|>
+  summarise(
+    mean_skew = mean(skewness),
+    mean_cog = mean (cog),
+    mean_skew = median (skewness),
+    mead_cog = median (cog)
+  )
+
+knitr::kable(summary_table)
+
   
 ```
 ---
@@ -98,12 +109,6 @@ model <- lm(
 print(model)
 ```
 ---
-##Summary model
-```{r}
-summary(model)
-```
-
----
 
 ##Scatter plot of COG ~ skweness for [s]
 ```{r fig.height=3.5, fig.width=5, message=TRUE}
@@ -116,7 +121,13 @@ data_s |>
        x = "COG", y = "Skewness")
 ```
 ---
+##Table model: Coefficients
+```{r}
+knitr::kable(summary(model)$coef)
+```
 
+
+---
 ##Model diagnostics
 
 ```{r fig.height=6.5, fig.width=7}
