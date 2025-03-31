@@ -56,11 +56,19 @@ library(ds4ling)
 ##  ds4ling loaded
 ##  Happy coding!
 ```
+
+``` r
+library("here")
+```
+
+```
+## here() starts at /Users/jorgevargasmutizabal/Desktop/pa_4
+```
 ---
 #Data load
 
 ``` r
-data &lt;- read.csv("../data_raw/fricatives/fricatives.csv")
+data &lt;- read.csv(here("data_raw", "fricatives", "fricatives.csv"))
 ```
 ---
 ##Data tidying: COG and Skewness for S and Sh 

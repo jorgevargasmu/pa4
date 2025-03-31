@@ -16,17 +16,16 @@ output:
 library(tidyverse)
 library(dplyr)
 library(ds4ling)
+library("here")
 ```
 ---
 #Data load
 ```{r}
-data <- read.csv("../data_raw/fricatives/fricatives.csv")
-
+data <- read.csv(here("data_raw", "fricatives", "fricatives.csv"))
 ```
 ---
 ##Data tidying: COG and Skewness for S and Sh 
 ```{r}
-
 
 data_1 <- data |>
   pivot_longer(cols = c(s_cog, sh_cog),
@@ -37,10 +36,6 @@ pivot_longer(cols = c(s_skewness, sh_skewness),
              values_to = "skewness")|>
   select("phoneme", "cog", "skewness")|>
   mutate(phoneme = gsub("_cog", "", phoneme))
-  
-  
-  
-
   
 ```
 ---
